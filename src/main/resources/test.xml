@@ -1,0 +1,8 @@
+
+<doc>
+    <child1>text1</child1>
+    <child2>
+        <child3>43434</child3>
+    </child2>
+    <child4 attribute="somestring"/>
+</doc>
