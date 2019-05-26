@@ -20,9 +20,11 @@ public class Rectangle extends Figure {
     }
 
     @Override
-    public void draw(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setPaint(Color.CYAN);
-        g.fillRect(startX, startY, width, height);
+    public void draw(Graphics g, boolean filled) {
+        if (filled) {
+            g.fillRect(startX, startY, width, height);
+        } else {
+            g.drawRect(startX, startY, width, height);
+        }
     }
 }

@@ -2,15 +2,24 @@ package org.xml.demo.ui;
 
 import javax.swing.*;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder
+@Getter
 public class Window extends JFrame {
 
-    public static void main(String[] args) {
-        Window window = new Window();
-        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setTitle("Graphic editor v.1");
-        window.add(new GraphicArea());
+    private String windowTitle;
 
-        window.setSize(700, 700);
-        window.setVisible(true);
+    private int windowHeight;
+
+    private int windowWidth;
+
+    private String workingDirectory;
+
+    public void init() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle(windowTitle);
+        setSize(windowWidth, windowHeight);
     }
 }

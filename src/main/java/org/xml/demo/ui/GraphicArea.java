@@ -1,5 +1,8 @@
 package org.xml.demo.ui;
 
+import org.xml.demo.ui.decorators.FilledDecorator;
+import org.xml.demo.ui.decorators.IDecorator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -60,10 +63,10 @@ public class GraphicArea extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
         System.out.println("Graphic area paint method");
         drawGrid(g);
-
+        IDecorator decorator = new FilledDecorator();
         //draw existing figures
         for (Figure f: figures) {
-            f.draw(g);
+            decorator.doDecorate(f, g);
         }
 
         if (isMousePressed) {
