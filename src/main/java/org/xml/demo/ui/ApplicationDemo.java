@@ -1,6 +1,7 @@
 package org.xml.demo.ui;
 
 public class ApplicationDemo {
+
     public static void main(String[] args) {
         Window window = Window
                 .builder()
@@ -10,7 +11,6 @@ public class ApplicationDemo {
                 .build();
         window.init();
 
-        window.add(new GraphicArea());
         window.setVisible(true);
     }
 }

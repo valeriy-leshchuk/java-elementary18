@@ -1,7 +1,14 @@
 package org.xml.demo.ui;
 
+import lombok.Setter;
 import org.xml.demo.ui.decorators.FilledDecorator;
 import org.xml.demo.ui.decorators.IDecorator;
+import org.xml.demo.ui.figures.Figure;
+import org.xml.demo.ui.figures.Line;
+import org.xml.demo.ui.figures.Rectangle;
+import org.xml.demo.ui.states.ApplicationMode;
+import org.xml.demo.ui.states.ApplicationWindowState;
+import org.xml.demo.ui.states.IApplicationWindowStateManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,22 +24,18 @@ public class GraphicArea extends JComponent {
 
     private boolean isMousePressed = false;
 
-    private int startX;
-
-    private int startY;
-
-    private int currentX;
-
-    private int currentY;
+    private int startX, startY, currentX, currentY;
 
     private List<Figure> figures = new LinkedList<>();
+
+    @Setter
+    private IApplicationWindowStateManager manager;
 
     public GraphicArea() {
         addMouseListener(new MouseAdapter() {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println("Mouse pressed");
                 isMousePressed = true;
                 currentX = startX = e.getX();
                 currentY = startY = e.getY();
@@ -41,9 +44,8 @@ public class GraphicArea extends JComponent {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println("Mouse released");
                 isMousePressed=false;
-                figures.add(new Rectangle(startX, startY, currentX, currentY));
+                figures.add(drawFromState(null, false));
                 repaint();
             }
         });
@@ -60,22 +62,56 @@ public class GraphicArea extends JComponent {
 
     @Override
     public void paint(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        System.out.println("Graphic area paint method");
         drawGrid(g);
-        IDecorator decorator = new FilledDecorator();
+
         //draw existing figures
         for (Figure f: figures) {
+            IDecorator decorator = createDecorator(f.getWindowState());
             decorator.doDecorate(f, g);
         }
 
         if (isMousePressed) {
-            g2.setPaint(Color.BLUE);
-            g.fillRect(
-                    Integer.min(startX, currentX),
-                    Integer.min(startY, currentY),
-                    Math.abs(startX - currentX),
-                    Math.abs(startY - currentY));
+            drawFromState(g, true);
+        }
+    }
+
+    private Figure drawFromState(Graphics g, boolean doDecorate) {
+        ApplicationWindowState state = manager.provideState();
+        IDecorator decorator = createDecorator(state);
+        Figure f = null;
+        switch (state.getMode()) {
+            case DRAW_RECTANGLE:
+                f = createRectangle();
+                break;
+            case DRAW_LINE:
+                f = createLine();
+                break;
+            case DRAW_CIRCLE:
+                break;
+        }
+        f.setWindowState(state);
+        if (f != null && decorator!=null && doDecorate) {
+            decorator.doDecorate(f, g);
+        }
+        return f;
+    }
+
+    private Figure createRectangle() {
+        return new Rectangle(startX, startY, currentX, currentY);
+    }
+
+    private Figure createLine() {
+        return new Line(startX, startY, currentX, currentY);
+    }
+
+    private IDecorator createDecorator(ApplicationWindowState state) {
+        if (state.getMode() == ApplicationMode.DRAW_CIRCLE ||
+                state.getMode() == ApplicationMode.DRAW_RECTANGLE ||
+                state.getMode() == ApplicationMode.DRAW_LINE
+        ) {
+            return new FilledDecorator();
+        } else {
+            return null;
         }
     }
 

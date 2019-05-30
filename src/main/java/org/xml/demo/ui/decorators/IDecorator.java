@@ -1,6 +1,6 @@
 package org.xml.demo.ui.decorators;
 
-import org.xml.demo.ui.Figure;
+import org.xml.demo.ui.figures.Figure;
 
 import java.awt.*;
 
