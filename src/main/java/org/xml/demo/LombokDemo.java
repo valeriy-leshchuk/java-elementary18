@@ -2,6 +2,9 @@ package org.xml.demo;
 
 import lombok.*;
 
+/**
+ * Added documentation to LombokDemo class.
+ */
 @Data
 public class LombokDemo {
 
