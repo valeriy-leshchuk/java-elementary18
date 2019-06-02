@@ -1,8 +1,12 @@
 package org.xml.demo.ui;
 
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.demo.ui.decorators.FilledDecorator;
 import org.xml.demo.ui.decorators.IDecorator;
+import org.xml.demo.ui.decorators.PickedDecorator;
 import org.xml.demo.ui.figures.Figure;
 import org.xml.demo.ui.figures.Line;
 import org.xml.demo.ui.figures.Rectangle;
@@ -18,6 +22,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.util.LinkedList;
 import java.util.List;
 
+@Slf4j
 public class GraphicArea extends JComponent {
 
     private int gridStep = 10;
@@ -32,6 +37,7 @@ public class GraphicArea extends JComponent {
     private IApplicationWindowStateManager manager;
 
     public GraphicArea() {
+        log.debug("Graphic area message");
         addMouseListener(new MouseAdapter() {
 
             @Override
@@ -45,7 +51,11 @@ public class GraphicArea extends JComponent {
             @Override
             public void mouseReleased(MouseEvent e) {
                 isMousePressed=false;
-                figures.add(drawFromState(null, false));
+                Figure f = drawFromState(null, false);
+                if (f != null) {
+                    figures.add(f);
+                }
+                figures.forEach(Figure::endMove);
                 repaint();
             }
         });
@@ -66,7 +76,7 @@ public class GraphicArea extends JComponent {
 
         //draw existing figures
         for (Figure f: figures) {
-            IDecorator decorator = createDecorator(f.getWindowState());
+            IDecorator decorator = createDecorator(manager.provideState());
             decorator.doDecorate(f, g);
         }
 
@@ -89,7 +99,9 @@ public class GraphicArea extends JComponent {
             case DRAW_CIRCLE:
                 break;
         }
-        f.setWindowState(state);
+        if (f != null) {
+            f.setWindowState(state);
+        }
         if (f != null && decorator!=null && doDecorate) {
             decorator.doDecorate(f, g);
         }
@@ -105,11 +117,21 @@ public class GraphicArea extends JComponent {
     }
 
     private IDecorator createDecorator(ApplicationWindowState state) {
-        if (state.getMode() == ApplicationMode.DRAW_CIRCLE ||
-                state.getMode() == ApplicationMode.DRAW_RECTANGLE ||
-                state.getMode() == ApplicationMode.DRAW_LINE
+        if ((state.getMode() != ApplicationMode.SELECT_ELEMENT &&
+                state.getMode() != ApplicationMode.FILL_ELEMENT)|| !isMousePressed
         ) {
             return new FilledDecorator();
+        } else if (state.getMode() ==ApplicationMode.SELECT_ELEMENT) {
+            System.out.println("Created Picked decorator");
+            return new PickedDecorator(startX, startY, currentX, currentY);
+        } else if (state.getMode() ==ApplicationMode.FILL_ELEMENT) {
+            System.out.println("Created Picked decorator");
+            return new PickedDecorator(startX, startY, currentX, currentY){
+                @Override
+                public void execute(Figure target) {
+                    target.getWindowState().setColor(state.getColor());
+                }
+            };
         } else {
             return null;
         }
