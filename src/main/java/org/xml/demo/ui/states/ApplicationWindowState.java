@@ -9,7 +9,7 @@ import java.awt.*;
 @AllArgsConstructor
 public class ApplicationWindowState {
 
-    private final ApplicationMode mode;
+    private  ApplicationMode mode;
 
-    private final Color color;
+    private  Color color;
 }

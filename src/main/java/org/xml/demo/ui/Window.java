@@ -46,8 +46,9 @@ public class Window extends JFrame implements IApplicationWindowStateManager {
         ButtonGroup buttonGroup = new ButtonGroup();
 
         JToggleButton button = new JToggleButton("Rectangle");
-        ApplicationWindowState previous = provideState();
+
         button.addActionListener(e -> {
+            ApplicationWindowState previous = provideState();
             changeState(new ApplicationWindowState(ApplicationMode.DRAW_RECTANGLE, previous.getColor()));
         });
         buttonPanel.add(button);
@@ -55,6 +56,7 @@ public class Window extends JFrame implements IApplicationWindowStateManager {
 
         JToggleButton button2 = new JToggleButton("Circle");
         button2.addActionListener(e -> {
+            ApplicationWindowState previous = provideState();
             changeState(new ApplicationWindowState(ApplicationMode.DRAW_CIRCLE, previous.getColor()));
         });
         buttonPanel.add(button2);
@@ -62,13 +64,50 @@ public class Window extends JFrame implements IApplicationWindowStateManager {
 
         JToggleButton button3 = new JToggleButton("Line");
         button3.addActionListener(e -> {
+            ApplicationWindowState previous = provideState();
             changeState(new ApplicationWindowState(ApplicationMode.DRAW_LINE, previous.getColor()));
         });
         buttonPanel.add(button3);
+
+        //color chooser button
+        JToggleButton pickButton = new JToggleButton("Pick");
+        pickButton.addActionListener((e) -> {
+            //get previous state
+            ApplicationWindowState previous = provideState();
+            //change current state
+            changeState(new ApplicationWindowState(ApplicationMode.SELECT_ELEMENT, previous.getColor()));
+        });
+        buttonPanel.add(pickButton);
+
+        //color chooser button
+        JButton colorButton = new JButton("Color");
+        colorButton.addActionListener((e) -> {
+            ApplicationWindowState previous = provideState();
+            Color c = JColorChooser.showDialog(
+                    (Component) e.getSource(),
+                    "Choose Background Color",
+                    provideState().getColor());
+            //change current state
+            changeState(new ApplicationWindowState(previous.getMode(), c));
+        });
+        buttonPanel.add(colorButton);
+
+        //color chooser button
+        JToggleButton fill = new JToggleButton("FillColor");
+        fill.addActionListener((e) -> {
+            //get previous state
+            ApplicationWindowState previous = provideState();
+            //change current state
+            changeState(new ApplicationWindowState(ApplicationMode.FILL_ELEMENT, previous.getColor()));
+        });
+        buttonPanel.add(fill);
+
         add(buttonPanel, BorderLayout.PAGE_START);
         buttonGroup.add(button);
         buttonGroup.add(button2);
         buttonGroup.add(button3);
+        buttonGroup.add(pickButton);
+        buttonGroup.add(fill);
     }
 
     @Override
