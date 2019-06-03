@@ -1,7 +1,8 @@
 package org.xml.demo.ui.figures;
 
 import java.awt.*;
-
+import lombok.ToString;
+@ToString(callSuper = true)
 public class Rectangle extends Figure {
 
     private  int initialX, initialY, startX, startY;

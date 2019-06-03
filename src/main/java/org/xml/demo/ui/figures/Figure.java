@@ -5,11 +5,15 @@ import lombok.Setter;
 import org.xml.demo.ui.states.ApplicationWindowState;
 
 import java.awt.*;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 public abstract class  Figure {
-
+    
+    protected boolean isActive;
+    
     protected ApplicationWindowState windowState;
 
     public abstract void draw(Graphics g, boolean filled);
