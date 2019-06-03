@@ -6,5 +6,6 @@ public enum ApplicationMode {
     DRAW_CIRCLE,
     SAVE,
     SELECT_ELEMENT,
-    FILL_ELEMENT;
+    FILL_ELEMENT,
+    RESIZE;
 }

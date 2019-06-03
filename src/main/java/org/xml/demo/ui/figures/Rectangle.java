@@ -7,15 +7,13 @@ public class Rectangle extends Figure {
 
     private  int initialX, initialY, startX, startY;
 
-    private  int width;
-
-    private  int height;
+    private  int width, height, initialWidth, initialHeight;
 
     public Rectangle(int startX, int startY, int currentX, int currentY) {
         this.initialX = this.startX = Integer.min(startX, currentX);
         this.initialY = this.startY = Integer.min(startY, currentY);
-        this.width = Math.abs(startX - currentX);
-        this.height = Math.abs(startY - currentY);
+        initialWidth = this.width = Math.abs(startX - currentX);
+        initialWidth = this.height = Math.abs(startY - currentY);
     }
 
     @Override
@@ -46,4 +44,17 @@ public class Rectangle extends Figure {
         this.initialX = startX;
         this.initialY = startY;
     }
+
+    @Override
+    public void endResize() {
+        this.initialHeight = this.height;
+        this.initialWidth = this.width;
+    }
+
+    @Override
+    public void resizeStart(int startX, int startY, int currentX, int currentY) {
+        this.width = this.initialWidth + (currentX - startX);
+        this.height = this.initialHeight  + (currentY - startY);
+    }    
+    
 }

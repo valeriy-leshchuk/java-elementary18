@@ -56,6 +56,7 @@ public class GraphicArea extends JComponent {
                     figures.add(f);
                 }
                 figures.forEach(Figure::endMove);
+                figures.forEach(Figure::endResize);
                 figures.forEach(ff -> ff.setActive(false));
                 repaint();
             }
@@ -134,7 +135,8 @@ public class GraphicArea extends JComponent {
 
     private IDecorator createDecorator(ApplicationWindowState state) {
         if ((state.getMode() != ApplicationMode.SELECT_ELEMENT
-                && state.getMode() != ApplicationMode.FILL_ELEMENT) || !isMousePressed) {
+                && state.getMode() != ApplicationMode.FILL_ELEMENT
+                && state.getMode() != ApplicationMode.RESIZE) || !isMousePressed) {
             return new FilledDecorator();
         } else if (state.getMode() == ApplicationMode.SELECT_ELEMENT && isMousePressed) {
             log.info("Created Picked decorator");
@@ -145,6 +147,14 @@ public class GraphicArea extends JComponent {
                 @Override
                 public void execute(Figure target) {
                     target.getWindowState().setColor(state.getColor());
+                }
+            };
+        } else if (state.getMode() == ApplicationMode.RESIZE && isMousePressed) {
+            log.info("Created Resized decorator Ext (Filled decorator)");
+            return new PickedDecorator(startX, startY, currentX, currentY) {
+                @Override
+                public void execute(Figure target) {
+                    target.resizeStart(startX, startY, currentX, currentY);
                 }
             };
         } else {

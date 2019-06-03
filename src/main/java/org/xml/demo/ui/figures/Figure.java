@@ -30,4 +30,11 @@ public abstract class  Figure {
     public void endMove() {
         //do nothing
     }
+    
+    public void resizeStart(int startX, int startY, int currentX, int currentY) {
+    }
+    
+    public void endResize() {
+        //do nothing
+    }
 }

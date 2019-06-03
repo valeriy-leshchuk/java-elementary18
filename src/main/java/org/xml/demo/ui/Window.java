@@ -102,12 +102,23 @@ public class Window extends JFrame implements IApplicationWindowStateManager {
         });
         buttonPanel.add(fill);
 
+        //color chooser button
+        JToggleButton resize = new JToggleButton("Resize");
+        resize.addActionListener((e) -> {
+            //get previous state
+            ApplicationWindowState previous = provideState();
+            //change current state
+            changeState(new ApplicationWindowState(ApplicationMode.RESIZE, previous.getColor()));
+        });
+        buttonPanel.add(resize);
+        
         add(buttonPanel, BorderLayout.PAGE_START);
         buttonGroup.add(button);
         buttonGroup.add(button2);
         buttonGroup.add(button3);
         buttonGroup.add(pickButton);
         buttonGroup.add(fill);
+        buttonGroup.add(resize);
     }
 
     @Override
