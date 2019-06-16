@@ -10,6 +10,7 @@ import org.ui.decorators.PickedDecorator;
 import org.ui.figures.Figure;
 import org.ui.figures.Line;
 import org.ui.figures.Rectangle;
+import org.ui.states.GraphicAreaState;
 import org.ui.states.IApplicationWindowStateManager;
 
 import javax.swing.*;
@@ -173,5 +174,15 @@ public class GraphicArea extends JComponent {
             g.drawLine(i, 0, i, getHeight());
         }
 
+    }
+
+    public GraphicAreaState getGraphicAreaState ()
+    {
+        return new GraphicAreaState(figures);
+    }
+
+    public void setGraphicAreaState (GraphicAreaState state)
+    {
+        figures = state.getFigures();
     }
 }

@@ -5,12 +5,15 @@ import lombok.Setter;
 import org.ui.states.ApplicationWindowState;
 
 import java.awt.*;
+import java.io.Serializable;
+
 import lombok.ToString;
 
 @Setter
 @Getter
 @ToString
-public abstract class  Figure {
+public abstract class  Figure implements Serializable
+{
     
     protected boolean isActive;
     
