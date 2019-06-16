@@ -1,12 +1,12 @@
-package org.xml.demo.ui;
+package org.ui;
 
 import javax.swing.*;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.xml.demo.ui.states.ApplicationMode;
-import org.xml.demo.ui.states.ApplicationWindowState;
-import org.xml.demo.ui.states.IApplicationWindowStateManager;
+import org.ui.states.ApplicationMode;
+import org.ui.states.ApplicationWindowState;
+import org.ui.states.IApplicationWindowStateManager;
 
 import java.awt.*;
 

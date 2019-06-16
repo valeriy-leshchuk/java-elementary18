@@ -1,8 +1,8 @@
-package org.xml.demo.ui.figures;
+package org.ui.figures;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.xml.demo.ui.states.ApplicationWindowState;
+import org.ui.states.ApplicationWindowState;
 
 import java.awt.*;
 import lombok.ToString;

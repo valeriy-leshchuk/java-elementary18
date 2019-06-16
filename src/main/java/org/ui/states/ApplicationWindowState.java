@@ -1,4 +1,4 @@
-package org.xml.demo.ui.states;
+package org.ui.states;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

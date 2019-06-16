@@ -1,16 +1,16 @@
-package org.xml.demo.ui;
+package org.ui;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.xml.demo.ui.decorators.FilledDecorator;
-import org.xml.demo.ui.decorators.IDecorator;
-import org.xml.demo.ui.decorators.PickedDecorator;
-import org.xml.demo.ui.figures.Figure;
-import org.xml.demo.ui.figures.Line;
-import org.xml.demo.ui.figures.Rectangle;
-import org.xml.demo.ui.states.ApplicationMode;
-import org.xml.demo.ui.states.ApplicationWindowState;
-import org.xml.demo.ui.states.IApplicationWindowStateManager;
+import org.ui.states.ApplicationMode;
+import org.ui.states.ApplicationWindowState;
+import org.ui.decorators.FilledDecorator;
+import org.ui.decorators.IDecorator;
+import org.ui.decorators.PickedDecorator;
+import org.ui.figures.Figure;
+import org.ui.figures.Line;
+import org.ui.figures.Rectangle;
+import org.ui.states.IApplicationWindowStateManager;
 
 import javax.swing.*;
 import java.awt.*;

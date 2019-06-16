@@ -1,4 +1,4 @@
-package org.xml.demo.ui.figures;
+package org.ui.figures;
 
 import java.awt.*;
 import lombok.ToString;

@@ -1,4 +1,4 @@
-package org.xml.demo.ui.states;
+package org.ui.states;
 
 public enum ApplicationMode {
     DRAW_RECTANGLE,

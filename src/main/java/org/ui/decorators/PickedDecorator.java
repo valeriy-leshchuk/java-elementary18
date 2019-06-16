@@ -1,7 +1,7 @@
-package org.xml.demo.ui.decorators;
+package org.ui.decorators;
 
 import lombok.Data;
-import org.xml.demo.ui.figures.Figure;
+import org.ui.figures.Figure;
 
 import java.awt.*;
 
